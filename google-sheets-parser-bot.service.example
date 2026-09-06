@@ -1,0 +1,15 @@
+[Unit]
+Description=Google Sheets Parser Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=your_linux_user
+WorkingDirectory=/opt/google-sheets-parser-bot
+ExecStart=/opt/google-sheets-parser-bot/venv/bin/python main.py
+Restart=always
+RestartSec=10
+EnvironmentFile=/opt/google-sheets-parser-bot/.env
+
+[Install]
+WantedBy=multi-user.target
