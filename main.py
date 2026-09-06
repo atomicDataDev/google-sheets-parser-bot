@@ -71,7 +71,7 @@ def run_scheduler() -> None:
     Schedules a daily automatic check at 10:00 and executes pending jobs every
     10 seconds. Intended to run in a daemon thread.
     """
-    schedule.every().day.at("10:00").do(checker.check_updates)
+    schedule.every().day.at("18:00").do(checker.check_updates)
     while True:
         schedule.run_pending()
         time.sleep(10)

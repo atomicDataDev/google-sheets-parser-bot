@@ -65,7 +65,7 @@ class StateManager:
         :param modified_time: ISO 8601 timestamp string from the Google Drive API.
         :type modified_time: str
         """
-        self._state["modifiedTime"] = modified_time
+        self._state = {"modifiedTime": modified_time}
         self._save()
 
     def _save(self) -> None:
@@ -74,3 +74,4 @@ class StateManager:
         """
         with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(self._state, f, ensure_ascii=False, indent=2)
+            f.write("\n")

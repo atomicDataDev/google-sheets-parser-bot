@@ -66,8 +66,15 @@ class CheckerLogic:
             ``MESSAGE_THREAD_ID`` from config when ``None``.
         :type thread_id: int | str | None
         """
-        target_chat = chat_id or GROUP_CHAT_ID
-        target_thread = thread_id or MESSAGE_THREAD_ID
+        target_chat: int | str = chat_id if chat_id is not None else GROUP_CHAT_ID
+        raw_thread = thread_id if thread_id is not None else MESSAGE_THREAD_ID
+
+        target_thread: int | None = None
+        if isinstance(raw_thread, int):
+            target_thread = raw_thread
+        elif isinstance(raw_thread, str) and raw_thread.strip().isdigit():
+            target_thread = int(raw_thread.strip())
+
         pdf_path = "temp_sheet.pdf"
 
         try:
@@ -109,7 +116,10 @@ class CheckerLogic:
                 )
 
         except Exception as e:
-            error_msg = f"Ошибка при проверке: {e}"
+            error_msg = (
+                f"Ошибка при проверке (chat_id={target_chat}, "
+                f"thread_id={target_thread}): {e}"
+            )
             print(error_msg)
             if manual:
                 self.bot.send_message(
